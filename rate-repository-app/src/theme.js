@@ -1,3 +1,11 @@
+import { Platform } from "react-native";
+
+const platformEspecificFont = Platform.select({
+  ios: "Arial",
+  android: "Roboto",
+  default: "System",
+});
+
 const theme = {
   colors: {
     textPrimary: "#24292e",
@@ -11,7 +19,7 @@ const theme = {
     subheading: 16,
   },
   fonts: {
-    main: "System",
+    main: platformEspecificFont,
   },
   fontWeights: {
     normal: "400",

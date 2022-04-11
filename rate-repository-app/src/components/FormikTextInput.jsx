@@ -6,6 +6,7 @@ import TextInput from "./TextInput";
 
 const styles = StyleSheet.create({
   errorText: {
+    color: "#d73a4a",
     marginTop: 5,
   },
 });
