@@ -59,6 +59,7 @@ const RepositoryItem = ({ item }) => {
             flexDirection: "column",
             justifyContent: "space-around",
             alignItems: "flex-start",
+            maxWidth: 350,
           }}
         >
           <Text fontWeight="bold">{item.fullName}</Text>
