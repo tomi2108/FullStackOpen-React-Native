@@ -16,6 +16,7 @@ class UserStorage {
       JSON.stringify(token)
     );
   }
+
   async clearToken() {
     await AsyncStorage.removeItem(`${this.namespace}:token`);
   }
