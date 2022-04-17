@@ -1,41 +1,14 @@
-import { StyleSheet, Text as NativeText } from "react-native";
-import theme from "../utils/theme.js";
-
-const styles = StyleSheet.create({
-  text: {
-    color: theme.colors.textPrimary,
-    fontSize: theme.fontSizes.body,
-    fontFamily: theme.fonts.main,
-    fontWeight: theme.fontWeights.normal,
-  },
-  backgroundColor: {
-    backgroundColor: theme.colors.secondary,
-  },
-  colorTextSecondary: {
-    color: theme.colors.textSecondary,
-  },
-  colorTextTertiary: {
-    color: theme.colors.textTertiary,
-  },
-  colorPrimary: {
-    color: theme.colors.primary,
-  },
-  fontSizeSubheading: {
-    fontSize: theme.fontSizes.subheading,
-  },
-  fontWeightBold: {
-    fontWeight: theme.fontWeights.bold,
-  },
-});
+import { Text as NativeText } from "react-native";
+import styles from "../styles/styles";
 
 const Text = ({ color, fontSize, fontWeight, style, ...props }) => {
   const textStyle = [
-    styles.text,
-    color === "secondary" && styles.colorTextSecondary,
-    color === "primary" && styles.colorPrimary,
-    color === "tertiary" && styles.colorTextTertiary,
-    fontSize === "subheading" && styles.fontSizeSubheading,
-    fontWeight === "bold" && styles.fontWeightBold,
+    styles.textComponent.text,
+    color === "secondary" && styles.textComponent.colorTextSecondary,
+    color === "primary" && styles.textComponent.colorPrimary,
+    color === "tertiary" && styles.textComponent.colorTextTertiary,
+    fontSize === "subheading" && styles.textComponent.fontSizeSubheading,
+    fontWeight === "bold" && styles.textComponent.fontWeightBold,
     style,
   ];
 

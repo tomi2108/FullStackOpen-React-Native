@@ -1,15 +1,10 @@
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, View } from "react-native";
 import useRepositories from "../hooks/useRepositories";
+import styles from "../styles/styles";
 import RepositoryItem from "./RepositoryItem";
 import Text from "./Text";
 
-const styles = StyleSheet.create({
-  separator: {
-    height: 10,
-  },
-});
-
-const ItemSeparator = () => <View style={styles.separator} />;
+const ItemSeparator = () => <View style={styles.repository.separator} />;
 
 const RepositoryList = () => {
   const { repositories } = useRepositories(); //null if no repos, repos[] if there are repos

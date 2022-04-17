@@ -2,7 +2,7 @@ import { Formik } from "formik";
 import { Pressable, View } from "react-native";
 import * as yup from "yup";
 import useReview from "../hooks/useReview";
-import { styles } from "../styles/FormStyles";
+import styles from "../styles/styles";
 import FormikTextInput from "./FormikTextInput";
 import Text from "./Text";
 
@@ -45,24 +45,24 @@ const CreateReview = () => {
     >
       {({ handleSubmit }) => {
         return (
-          <View style={styles.container}>
+          <View style={styles.form.container}>
             <FormikTextInput
-              style={styles.input}
+              style={styles.form.input}
               name="ownerName"
               placeholder="Repository owner name"
             />
             <FormikTextInput
-              style={styles.input}
+              style={styles.form.input}
               name="repositoryName"
               placeholder="Repository name"
             />
             <FormikTextInput
-              style={styles.input}
+              style={styles.form.input}
               name="rating"
               placeholder="Rating between 0 and 100"
             />
             <FormikTextInput
-              style={styles.input}
+              style={styles.form.input}
               name="text"
               placeholder="Review"
             />

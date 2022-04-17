@@ -2,7 +2,7 @@ import { Formik } from "formik";
 import { Pressable, View } from "react-native";
 import * as yup from "yup";
 import useUser from "../hooks/useUser";
-import { styles } from "../styles/FormStyles";
+import styles from "../styles/styles";
 import FormikTextInput from "./FormikTextInput";
 import Text from "./Text";
 
@@ -47,25 +47,25 @@ const SignUp = () => {
     >
       {({ handleSubmit }) => {
         return (
-          <View style={styles.container}>
+          <View style={styles.form.container}>
             <FormikTextInput
-              style={styles.input}
+              style={styles.form.input}
               name="username"
               placeholder="Username"
             />
             <FormikTextInput
               secureTextEntry
-              style={styles.input}
+              style={styles.form.input}
               name="password"
               placeholder="Password"
             />
             <FormikTextInput
               secureTextEntry
-              style={styles.input}
+              style={styles.form.input}
               name="passwordConfirmation"
               placeholder="Password confirmation"
             />
-            <Pressable onPress={handleSubmit} style={styles.button}>
+            <Pressable onPress={handleSubmit} style={styles.form.button}>
               <Text color="tertiary">Sign up</Text>
             </Pressable>
           </View>

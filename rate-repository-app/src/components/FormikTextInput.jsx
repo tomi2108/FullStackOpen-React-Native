@@ -1,15 +1,7 @@
 import { useField } from "formik";
-import { StyleSheet } from "react-native";
-
+import styles from "../styles/styles";
 import Text from "./Text";
 import TextInput from "./TextInput";
-
-const styles = StyleSheet.create({
-  errorText: {
-    color: "#d73a4a",
-    marginTop: 5,
-  },
-});
 
 const FormikTextInput = ({ name, ...props }) => {
   const [field, meta, helpers] = useField(name);
@@ -24,7 +16,7 @@ const FormikTextInput = ({ name, ...props }) => {
         error={showError}
         {...props}
       />
-      {showError && <Text style={styles.errorText}>{meta.error}</Text>}
+      {showError && <Text style={styles.form.errorText}>{meta.error}</Text>}
     </>
   );
 };
