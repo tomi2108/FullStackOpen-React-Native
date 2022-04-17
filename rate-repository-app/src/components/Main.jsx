@@ -2,10 +2,13 @@ import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { useNavigate } from "react-router-dom";
 import { Navigate, Route, Routes } from "react-router-native";
-import useSignOut from "../hooks/useSignOut";
+import useLogin from "../hooks/useLogin";
 import AppBar from "./AppBar";
+import CreateReview from "./CreateReview";
+import LogIn from "./LogIn";
+import RepositoryDetails from "./RepositoryDetails";
 import RepositoryList from "./RepositoryList";
-import SignIn from "./SignIn";
+import SignUp from "./SignUp";
 
 const styles = StyleSheet.create({
   container: {
@@ -16,9 +19,26 @@ const styles = StyleSheet.create({
 });
 
 const Main = () => {
-  const [, user] = useSignOut();
-
+  const [signIn, signOut, user] = useLogin();
   let navigate = useNavigate();
+
+  const handleSignOut = async ({ username, password }) => {
+    try {
+      await signOut(username, password);
+      navigate("/sign");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleSignIn = async ({ username, password }) => {
+    try {
+      await signIn(username, password);
+      navigate("/list");
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   useEffect(() => {
     user ? navigate("/list") : navigate("/sign");
@@ -26,10 +46,13 @@ const Main = () => {
 
   return (
     <View style={styles.container}>
-      <AppBar />
+      <AppBar onSignOut={handleSignOut} user={user} />
       <Routes>
-        <Route path="/sign" element={<SignIn />} />
+        <Route path="/sign" element={<LogIn submit={handleSignIn} />} />
         <Route path="/list" element={<RepositoryList />} />
+        <Route path="/create" element={<CreateReview />} />
+        <Route path="/register" element={<SignUp />} />
+        <Route path="/repo/:id" element={<RepositoryDetails />} />
         <Route path="*" element={<Navigate to="/sign" replace />} />
       </Routes>
     </View>

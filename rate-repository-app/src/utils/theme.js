@@ -9,7 +9,7 @@ const platformEspecificFont = Platform.select({
 const theme = {
   colors: {
     textPrimary: "#24292e",
-    textSecondary: "#c6c6c6",
+    textSecondary: "#676767",
     textTertiary: "#ebf5ff",
     primary: "#0366d6",
     secondary: "#24292e",
