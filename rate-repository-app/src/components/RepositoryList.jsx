@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import { Picker } from "@react-native-picker/picker";
+=======
+>>>>>>> c318cc334df0425f382dcf979b4665546672d945
 import { useState } from "react";
 import { FlatList, View } from "react-native";
 import useRepositories from "../hooks/useRepositories";
@@ -9,6 +12,8 @@ import Text from "./Text";
 const ItemSeparator = () => <View style={styles.repository.separator} />;
 
 const RepositoryList = () => {
+const [filter, setFilter] = useState();
+
   const [repositoryOrder, setRepositoryOrder] = useState({
     order: "CREATED_AT",
     direction: "DESC",
@@ -27,6 +32,7 @@ const RepositoryList = () => {
       </View>
     );
   }
+
   return (
     <>
       <Picker
