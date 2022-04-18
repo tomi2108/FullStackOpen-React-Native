@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { FlatList, View } from "react-native";
 import useRepositories from "../hooks/useRepositories";
 import styles from "../styles/styles";
@@ -7,6 +8,8 @@ import Text from "./Text";
 const ItemSeparator = () => <View style={styles.repository.separator} />;
 
 const RepositoryList = () => {
+  const [filter, setFilter] = useState();
+
   const { repositories } = useRepositories(); //null if no repos, repos[] if there are repos
 
   const repositoryNodes = repositories
@@ -20,6 +23,7 @@ const RepositoryList = () => {
       </View>
     );
   }
+
   return (
     <FlatList
       data={repositoryNodes}
