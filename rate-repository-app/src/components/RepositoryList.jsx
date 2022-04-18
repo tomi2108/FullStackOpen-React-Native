@@ -1,3 +1,5 @@
+import { Picker } from "@react-native-picker/picker";
+import { useState } from "react";
 import { FlatList, View } from "react-native";
 import useRepositories from "../hooks/useRepositories";
 import styles from "../styles/styles";
@@ -7,7 +9,12 @@ import Text from "./Text";
 const ItemSeparator = () => <View style={styles.repository.separator} />;
 
 const RepositoryList = () => {
-  const { repositories } = useRepositories(); //null if no repos, repos[] if there are repos
+  const [repositoryOrder, setRepositoryOrder] = useState({
+    order: "CREATED_AT",
+    direction: "DESC",
+  });
+
+  const { repositories } = useRepositories(repositoryOrder); //null if no repos, repos[] if there are repos
 
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)
@@ -21,11 +28,32 @@ const RepositoryList = () => {
     );
   }
   return (
-    <FlatList
-      data={repositoryNodes}
-      ItemSeparatorComponent={ItemSeparator}
-      renderItem={RepositoryItem}
-    />
+    <>
+      <Picker
+        selectedValue={repositoryOrder}
+        onValueChange={(itemValue) => {
+          setRepositoryOrder(itemValue);
+        }}
+      >
+        <Picker.Item
+          label="Latest repositories"
+          value={{ order: "CREATED_AT", direction: "DESC" }}
+        />
+        <Picker.Item
+          label="Highest rated repositories"
+          value={{ order: "RATING_AVERAGE", direction: "DESC" }}
+        />
+        <Picker.Item
+          label="Lowest rated repositories"
+          value={{ order: "RATING_AVERAGE", direction: "ASC" }}
+        />
+      </Picker>
+      <FlatList
+        data={repositoryNodes}
+        ItemSeparatorComponent={ItemSeparator}
+        renderItem={RepositoryItem}
+      />
+    </>
   );
 };
 
