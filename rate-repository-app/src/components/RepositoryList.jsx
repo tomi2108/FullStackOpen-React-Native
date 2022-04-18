@@ -1,22 +1,25 @@
 import { Picker } from "@react-native-picker/picker";
 import { useState } from "react";
 import { FlatList, View } from "react-native";
+import { useDebounce } from "use-debounce";
 import useRepositories from "../hooks/useRepositories";
 import styles from "../styles/styles";
 import RepositoryItem from "./RepositoryItem";
 import Text from "./Text";
+import TextInput from "./TextInput";
 
 const ItemSeparator = () => <View style={styles.repository.separator} />;
 
 const RepositoryList = () => {
   const [filter, setFilter] = useState();
+  const [keyword] = useDebounce(filter, 500);
 
   const [repositoryOrder, setRepositoryOrder] = useState({
     order: "CREATED_AT",
     direction: "DESC",
   });
 
-  const { repositories } = useRepositories(repositoryOrder); //null if no repos, repos[] if there are repos
+  const { repositories } = useRepositories(repositoryOrder, keyword); //null if no repos, repos[] if there are repos
 
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)
@@ -32,6 +35,12 @@ const RepositoryList = () => {
 
   return (
     <>
+      <TextInput
+        value={filter}
+        onValueChange={(e) => {
+          setFilter(e.target.value);
+        }}
+      />
       <Picker
         selectedValue={repositoryOrder}
         onValueChange={(itemValue) => {
