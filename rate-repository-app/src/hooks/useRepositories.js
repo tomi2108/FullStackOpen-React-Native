@@ -1,15 +1,15 @@
-import { useLazyQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { GET_REPOSITORIES } from "../graphql/queries";
 
-const useRepositories = ({ order, direction }, keyword) => {
+const useRepositories = ({ order, direction }, keyword = "") => {
   const [repos, setRepos] = useState(null);
 
-  const { data, loading, error } = useLazyQuery(GET_REPOSITORIES, {
+  const { data, loading, error } = useQuery(GET_REPOSITORIES, {
     variables: {
       orderBy: order,
       orderDirection: direction,
-      searchKeyword: keyword,
+      searchKeyword: keyword ? keyword : "",
     },
     fetchPolicy: "cache-and-network",
   });

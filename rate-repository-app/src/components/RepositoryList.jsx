@@ -11,7 +11,7 @@ import TextInput from "./TextInput";
 const ItemSeparator = () => <View style={styles.repository.separator} />;
 
 const RepositoryList = () => {
-  const [filter, setFilter] = useState();
+  const [filter, setFilter] = useState("");
   const [keyword] = useDebounce(filter, 500);
 
   const [repositoryOrder, setRepositoryOrder] = useState({
@@ -36,10 +36,10 @@ const RepositoryList = () => {
   return (
     <>
       <TextInput
+        style={styles.form.input}
         value={filter}
-        onValueChange={(e) => {
-          setFilter(e.target.value);
-        }}
+        onChange={(e) => setFilter(e.target.value)}
+        placeholder="Search repository"
       />
       <Picker
         selectedValue={repositoryOrder}
