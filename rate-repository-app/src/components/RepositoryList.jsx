@@ -19,7 +19,11 @@ const RepositoryList = () => {
     direction: "DESC",
   });
 
-  const { repositories } = useRepositories(repositoryOrder, keyword); //null if no repos, repos[] if there are repos
+  const { fetchMore, repositories } = useRepositories({
+    keyword,
+    ...repositoryOrder,
+    first: 8,
+  }); //null if no repos, repos[] if there are repos
 
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)
@@ -32,6 +36,10 @@ const RepositoryList = () => {
       </View>
     );
   }
+
+  const handleEndReach = () => {
+    fetchMore();
+  };
 
   return (
     <>
@@ -61,6 +69,7 @@ const RepositoryList = () => {
         />
       </Picker>
       <FlatList
+        onEndReached={handleEndReach}
         data={repositoryNodes}
         ItemSeparatorComponent={ItemSeparator}
         renderItem={RepositoryItem}
