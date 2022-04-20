@@ -1,8 +1,7 @@
-import { useLazyQuery } from "@apollo/client/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { FlatList, Image, Linking, Pressable, View } from "react-native";
 import { useParams } from "react-router-dom";
-import { GET_REPO } from "../graphql/queries";
+import useReview from "../hooks/useReview";
 import styles from "../styles/styles";
 import Review from "./Review";
 import Text from "./Text";
@@ -16,25 +15,18 @@ const numberParser = (number) => {
 const ItemSeparator = () => <View style={styles.repository.separator} />;
 
 const RepositoryDetails = () => {
-  const [item, setItem] = useState(null);
-  const [reviews, setReviews] = useState(null);
-
   const { id } = useParams();
-
-  const [fetchRepo, { data }] = useLazyQuery(GET_REPO, {
-    variables: { id: id },
-    fetchPolicy: "cache-and-network",
-    onCompleted: () => {
-      setItem(data.repository);
-      setReviews(data.repository.reviews.edges.map((edge) => edge.node));
-    },
-  });
 
   useEffect(() => {
     if (id) fetchRepo();
   }, [id]);
 
-  if (!item || !reviews) return <Text>Loading...</Text>;
+  const { fetchMoreReviews, fetchRepo, repository, reviews } = useReview({
+    id,
+    first: 4,
+  });
+
+  if (!repository || !reviews) return <Text>Loading...</Text>;
 
   return (
     <View style={styles.repository.container}>
@@ -42,7 +34,7 @@ const RepositoryDetails = () => {
         <View style={{ flexGrow: 0, marginEnd: 5 }}>
           <Image
             style={styles.repository.image}
-            source={{ uri: item.ownerAvatarUrl, width: 50, height: 50 }}
+            source={{ uri: repository.ownerAvatarUrl, width: 50, height: 50 }}
           />
         </View>
 
@@ -54,31 +46,35 @@ const RepositoryDetails = () => {
             maxWidth: 350,
           }}
         >
-          <Text fontWeight="bold">{item.fullName}</Text>
-          <Text color="secondary">{item.description}</Text>
-          <Text style={styles.repository.language}>{item.language}</Text>
+          <Text fontWeight="bold">{repository.fullName}</Text>
+          <Text color="secondary">{repository.description}</Text>
+          <Text style={styles.repository.language}>{repository.language}</Text>
         </View>
       </View>
       <View style={styles.repository.numbers}>
         <View style={styles.repository.numbersItem}>
-          <Text fontWeight="bold">{numberParser(item.stargazersCount)}</Text>
+          <Text fontWeight="bold">
+            {numberParser(repository.stargazersCount)}
+          </Text>
           <Text>Stars</Text>
         </View>
         <View style={styles.repository.numbersItem}>
-          <Text fontWeight="bold">{numberParser(item.forksCount)}</Text>
+          <Text fontWeight="bold">{numberParser(repository.forksCount)}</Text>
           <Text>Forks</Text>
         </View>
         <View style={styles.repository.numbersItem}>
-          <Text fontWeight="bold">{numberParser(item.reviewCount)}</Text>
+          <Text fontWeight="bold">{numberParser(repository.reviewCount)}</Text>
           <Text>Reviews</Text>
         </View>
         <View style={styles.repository.numbersItem}>
-          <Text fontWeight="bold">{numberParser(item.ratingAverage)}</Text>
+          <Text fontWeight="bold">
+            {numberParser(repository.ratingAverage)}
+          </Text>
           <Text>Rating</Text>
         </View>
       </View>
 
-      <Pressable onPress={() => Linking.openURL(item.url)}>
+      <Pressable onPress={() => Linking.openURL(repository.url)}>
         <View style={styles.repository.button}>
           <Text color="tertiary">Open in GitHub</Text>
         </View>
@@ -86,6 +82,7 @@ const RepositoryDetails = () => {
       <View style={styles.repository.separator} />
 
       <FlatList
+        onEndReached={fetchMoreReviews}
         data={reviews}
         ItemSeparatorComponent={ItemSeparator}
         renderItem={Review}

@@ -22,16 +22,12 @@ const RepositoryList = () => {
     searchKeyword: keyword,
     orderBy: repositoryOrder[0],
     orderDirection: repositoryOrder[1],
-    first: 6,
+    first: 3,
   }); //null if no repos, repos[] if there are repos
 
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)
     : [];
-
-  const handleEndReach = () => {
-    fetchMore();
-  };
 
   return (
     <>
@@ -62,7 +58,7 @@ const RepositoryList = () => {
       </Picker>
 
       <FlatList
-        onEndReached={handleEndReach}
+        onEndReached={fetchMore}
         data={repositoryNodes ? repositoryNodes : []}
         ItemSeparatorComponent={ItemSeparator}
         renderItem={RepositoryItem}

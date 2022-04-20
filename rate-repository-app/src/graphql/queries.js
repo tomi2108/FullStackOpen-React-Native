@@ -41,7 +41,7 @@ export const GET_REPOSITORIES = gql`
 `;
 
 export const GET_REPO = gql`
-  query ($id: ID!) {
+  query ($id: ID!, $first: Int, $after: String) {
     repository(id: $id) {
       description
       fullName
@@ -53,7 +53,8 @@ export const GET_REPO = gql`
       forksCount
       stargazersCount
       url
-      reviews {
+      createdAt
+      reviews(first: $first, after: $after) {
         edges {
           node {
             id
@@ -65,6 +66,12 @@ export const GET_REPO = gql`
               username
             }
           }
+          cursor
+        }
+        pageInfo {
+          endCursor
+          startCursor
+          hasNextPage
         }
       }
     }
