@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { FlatList, Image, Linking, Pressable, View } from "react-native";
 import { useParams } from "react-router-dom";
+import Review from "../components/Review";
+import Text from "../components/Text";
 import useReview from "../hooks/useReview";
 import styles from "../styles/styles";
-import Review from "./Review";
-import Text from "./Text";
 
 const numberParser = (number) => {
   if (number < 1000) return number;

@@ -1,10 +1,10 @@
 import { Formik } from "formik";
 import { Pressable, View } from "react-native";
 import * as yup from "yup";
+import FormikTextInput from "../components/FormikTextInput";
+import Text from "../components/Text";
 import useUser from "../hooks/useUser";
 import styles from "../styles/styles";
-import FormikTextInput from "./FormikTextInput";
-import Text from "./Text";
 
 const initialValues = {
   username: "",

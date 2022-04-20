@@ -1,10 +1,10 @@
 import { Formik } from "formik";
 import { Pressable, View } from "react-native";
 import * as yup from "yup";
+import FormikTextInput from "../components/FormikTextInput";
+import Text from "../components/Text";
 import useReview from "../hooks/useReview";
 import styles from "../styles/styles";
-import FormikTextInput from "./FormikTextInput";
-import Text from "./Text";
 
 const initialValues = {
   ownerName: "",
@@ -27,10 +27,11 @@ const validationSchema = yup.object().shape({
 const parseStringToNumber = (string) => +string;
 
 const CreateReview = () => {
-  const createReview = useReview();
+  const { createReview } = useReview();
 
   const handleReviewCreation = async (review) => {
     review.rating = parseStringToNumber(review.rating);
+    console.log(review);
     await createReview(review);
   };
 
@@ -66,7 +67,7 @@ const CreateReview = () => {
               name="text"
               placeholder="Review"
             />
-            <Pressable onPress={handleSubmit} style={styles.button}>
+            <Pressable onPress={handleSubmit} style={styles.form.button}>
               <Text color="tertiary">Create a review</Text>
             </Pressable>
           </View>

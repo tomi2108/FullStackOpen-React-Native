@@ -2,10 +2,10 @@ import { Picker } from "@react-native-picker/picker";
 import { useState } from "react";
 import { FlatList, View } from "react-native";
 import { useDebounce } from "use-debounce";
+import RepositoryItem from "../components/RepositoryItem";
+import TextInput from "../components/TextInput";
 import useRepositories from "../hooks/useRepositories";
 import styles from "../styles/styles";
-import RepositoryItem from "./RepositoryItem";
-import TextInput from "./TextInput";
 
 const ItemSeparator = () => <View style={styles.repository.separator} />;
 
@@ -22,7 +22,7 @@ const RepositoryList = () => {
     searchKeyword: keyword,
     orderBy: repositoryOrder[0],
     orderDirection: repositoryOrder[1],
-    first: 3,
+    first: 8,
   }); //null if no repos, repos[] if there are repos
 
   const repositoryNodes = repositories

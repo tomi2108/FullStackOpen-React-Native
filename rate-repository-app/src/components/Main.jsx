@@ -3,12 +3,13 @@ import { StyleSheet, View } from "react-native";
 import { useNavigate } from "react-router-dom";
 import { Navigate, Route, Routes } from "react-router-native";
 import useLogin from "../hooks/useLogin";
+import CreateReview from "../Pages/CreateReview";
+import LogIn from "../Pages/LogIn";
+import Profile from "../Pages/Profile";
+import RepositoryDetails from "../Pages/RepositoryDetails";
+import RepositoryList from "../Pages/RepositoryList";
+import SignUp from "../Pages/SignUp";
 import AppBar from "./AppBar";
-import CreateReview from "./CreateReview";
-import LogIn from "./LogIn";
-import RepositoryDetails from "./RepositoryDetails";
-import RepositoryList from "./RepositoryList";
-import SignUp from "./SignUp";
 
 const styles = StyleSheet.create({
   container: {
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
 });
 
 const Main = () => {
-  const [signIn, signOut, user] = useLogin();
+  const { signIn, signOut, user } = useLogin({});
   let navigate = useNavigate();
 
   const handleSignOut = async ({ username, password }) => {
@@ -52,6 +53,7 @@ const Main = () => {
         <Route path="/list" element={<RepositoryList />} />
         <Route path="/create" element={<CreateReview />} />
         <Route path="/register" element={<SignUp />} />
+        <Route path="/me" element={<Profile />} />
         <Route path="/repo/:id" element={<RepositoryDetails />} />
         <Route path="*" element={<Navigate to="/sign" replace />} />
       </Routes>

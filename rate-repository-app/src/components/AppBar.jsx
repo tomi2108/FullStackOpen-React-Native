@@ -37,6 +37,11 @@ const AppBar = ({ onSignOut, user }) => {
               Repositories
             </Text>
           </Link>
+          <Link to="/me">
+            <Text color="tertiary" fontWeight="bold">
+              My reviews
+            </Text>
+          </Link>
         </>
       )}
     </View>
