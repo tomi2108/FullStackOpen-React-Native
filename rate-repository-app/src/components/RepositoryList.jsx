@@ -5,7 +5,6 @@ import { useDebounce } from "use-debounce";
 import useRepositories from "../hooks/useRepositories";
 import styles from "../styles/styles";
 import RepositoryItem from "./RepositoryItem";
-import Text from "./Text";
 import TextInput from "./TextInput";
 
 const ItemSeparator = () => <View style={styles.repository.separator} />;
@@ -14,28 +13,21 @@ const RepositoryList = () => {
   const [filter, setFilter] = useState("");
   const [keyword] = useDebounce(filter, 500);
 
-  const [repositoryOrder, setRepositoryOrder] = useState({
-    order: "CREATED_AT",
-    direction: "DESC",
-  });
+  const [repositoryOrder, setRepositoryOrder] = useState([
+    "CREATED_AT",
+    "DESC",
+  ]);
 
   const { fetchMore, repositories } = useRepositories({
-    keyword,
-    ...repositoryOrder,
-    first: 8,
+    searchKeyword: keyword,
+    orderBy: repositoryOrder[0],
+    orderDirection: repositoryOrder[1],
+    first: 6,
   }); //null if no repos, repos[] if there are repos
 
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)
     : [];
-
-  if (!repositoryNodes) {
-    return (
-      <View>
-        <Text>No repositories</Text>
-      </View>
-    );
-  }
 
   const handleEndReach = () => {
     fetchMore();
@@ -46,31 +38,32 @@ const RepositoryList = () => {
       <TextInput
         style={styles.form.input}
         value={filter}
-        onChange={(e) => setFilter(e.target.value)}
+        onChangeText={(text) => setFilter(text)}
         placeholder="Search repository"
       />
       <Picker
         selectedValue={repositoryOrder}
-        onValueChange={(itemValue) => {
-          setRepositoryOrder(itemValue);
-        }}
+        onValueChange={(itemValue) => setRepositoryOrder(itemValue)}
+        mode="dropdown"
       >
+        <Picker.Item label="Order repositories" />
         <Picker.Item
           label="Latest repositories"
-          value={{ order: "CREATED_AT", direction: "DESC" }}
+          value={["CREATED_AT", "DESC"]}
         />
         <Picker.Item
           label="Highest rated repositories"
-          value={{ order: "RATING_AVERAGE", direction: "DESC" }}
+          value={["RATING_AVERAGE", "DESC"]}
         />
         <Picker.Item
           label="Lowest rated repositories"
-          value={{ order: "RATING_AVERAGE", direction: "ASC" }}
+          value={["RATING_AVERAGE", "ASC"]}
         />
       </Picker>
+
       <FlatList
         onEndReached={handleEndReach}
-        data={repositoryNodes}
+        data={repositoryNodes ? repositoryNodes : []}
         ItemSeparatorComponent={ItemSeparator}
         renderItem={RepositoryItem}
       />

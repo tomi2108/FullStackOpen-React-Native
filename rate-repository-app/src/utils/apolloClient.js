@@ -9,6 +9,16 @@ const httpLink = createHttpLink({
   uri: apolloUri,
 });
 
+const cache = new InMemoryCache({
+  typePolicies: {
+    Query: {
+      fields: {
+        repositories: relayStylePagination(),
+      },
+    },
+  },
+});
+
 const createApolloClient = (userStorage) => {
   const authLink = setContext(async (_, { headers }) => {
     try {
@@ -25,19 +35,9 @@ const createApolloClient = (userStorage) => {
     }
   });
 
-  const cache = new InMemoryCache({
-    typePolicies: {
-      Query: {
-        fields: {
-          repositories: relayStylePagination(),
-        },
-      },
-    },
-  });
-
   return new ApolloClient({
     link: authLink.concat(httpLink),
-    cache: cache,
+    cache,
   });
 };
 

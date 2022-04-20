@@ -18,6 +18,7 @@ export const GET_REPOSITORIES = gql`
       totalCount
       edges {
         node {
+          createdAt
           description
           fullName
           id
