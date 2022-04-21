@@ -27,8 +27,19 @@ const styles = {
       marginTop: 5,
     },
     button: {
+      fontWeight: "bold",
       alignItems: "center",
       backgroundColor: "#0165d4",
+      borderRadius: 5,
+      color: "#ffffff",
+      height: 40,
+      justifyContent: "center",
+      marginTop: 10,
+    },
+    redButton: {
+      fontWeight: "bold",
+      alignItems: "center",
+      backgroundColor: "#d6394c",
       borderRadius: 5,
       color: "#ffffff",
       height: 40,
@@ -63,6 +74,7 @@ const styles = {
       height: 40,
       justifyContent: "center",
       marginTop: 10,
+      marginEnd: 5,
     },
     info: {
       alignItems: "center",

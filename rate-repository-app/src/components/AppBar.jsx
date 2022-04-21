@@ -1,23 +1,26 @@
 import { Pressable, View } from "react-native";
-import { Link } from "react-router-native";
+import { useNavigate } from "react-router-native";
 import styles from "../styles/styles";
 import Text from "./Text";
 
 const AppBar = ({ onSignOut, user }) => {
+  let navigate = useNavigate();
+
   return (
     <View style={styles.appBar.container}>
       {!user && (
         <>
-          <Link to="/sign">
+          <Pressable onPress={() => navigate("sign")}>
             <Text color="tertiary" fontWeight="bold">
               Log In
             </Text>
-          </Link>
-          <Link to="/register">
+          </Pressable>
+
+          <Pressable onPress={() => navigate("/register")}>
             <Text color="tertiary" fontWeight="bold">
               Sign Up
             </Text>
-          </Link>
+          </Pressable>
         </>
       )}
       {user && (
@@ -27,21 +30,21 @@ const AppBar = ({ onSignOut, user }) => {
               Sign Out
             </Text>
           </Pressable>
-          <Link to="/create">
+          <Pressable onPress={() => navigate("/create")}>
             <Text color="tertiary" fontWeight="bold">
               Create a review
             </Text>
-          </Link>
-          <Link to="/list">
+          </Pressable>
+          <Pressable onPress={() => navigate("/list")}>
             <Text color="tertiary" fontWeight="bold">
               Repositories
             </Text>
-          </Link>
-          <Link to="/me">
+          </Pressable>
+          <Pressable onPress={() => navigate("/me")}>
             <Text color="tertiary" fontWeight="bold">
               My reviews
             </Text>
-          </Link>
+          </Pressable>
         </>
       )}
     </View>

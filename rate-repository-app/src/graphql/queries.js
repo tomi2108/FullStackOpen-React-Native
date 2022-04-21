@@ -57,6 +57,9 @@ export const GET_REPO = gql`
       reviews(first: $first, after: $after) {
         edges {
           node {
+            repository {
+              id
+            }
             id
             text
             rating
@@ -86,6 +89,9 @@ export const GET_LOGGED_USER = gql`
       reviews @include(if: $includeReviews) {
         edges {
           node {
+            repository {
+              id
+            }
             id
             text
             rating

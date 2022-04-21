@@ -74,18 +74,18 @@ const RepositoryDetails = () => {
         </View>
       </View>
 
-      <Pressable onPress={() => Linking.openURL(repository.url)}>
-        <View style={styles.repository.button}>
+      <View style={styles.repository.button}>
+        <Pressable onPress={() => Linking.openURL(repository.url)}>
           <Text color="tertiary">Open in GitHub</Text>
-        </View>
-      </Pressable>
+        </Pressable>
+      </View>
       <View style={styles.repository.separator} />
 
       <FlatList
         onEndReached={fetchMoreReviews}
         data={reviews}
         ItemSeparatorComponent={ItemSeparator}
-        renderItem={Review}
+        renderItem={({ item }) => <Review review={item} showActions={false} />}
       />
     </View>
   );
